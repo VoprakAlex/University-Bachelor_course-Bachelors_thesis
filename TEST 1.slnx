@@ -1,0 +1,8 @@
+﻿<Solution>
+  <Project Path="AYellowpaper.SerializedCollections.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="AYellowpaper.SerializedCollections.Editor.csproj" />
+  <Project Path="AYellowpaper.SerializeInterfaces.Editor.csproj" />
+  <Project Path="Assembly-CSharp-firstpass.csproj" />
+  <Project Path="AYellowpaper.SerializeInterfaces.csproj" />
+</Solution>
