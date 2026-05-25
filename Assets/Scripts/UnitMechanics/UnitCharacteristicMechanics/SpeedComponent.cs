@@ -4,13 +4,16 @@ using UnityEngine.Events;
 [RequireComponent(typeof(StatsComponent))]
 public class SpeedComponent : MonoBehaviour
 {
+    [Header("Components")]
     [SerializeField] private StatsComponent _statsComponent;
 
-    [field: SerializeField] public float CurrentSpeed { get; private set; }
+    [Header("Speed")]
+    [field: SerializeField] public int CurrentSpeed { get; private set; }
 
-    [SerializeField] public UnityEvent<float> OnSetSpeed;
-    [SerializeField] public UnityEvent<float> OnIncreaseSpeed;
-    [SerializeField] public UnityEvent<float> OnDecreaseSpeed;
+    [Header("SpeedEvents")]
+    public UnityEvent<int> OnSetSpeed;
+    public UnityEvent<int> OnIncreaseSpeed;
+    public UnityEvent<int> OnDecreaseSpeed;
 
     private void Awake()
     {
@@ -20,25 +23,25 @@ public class SpeedComponent : MonoBehaviour
         }
     }
 
-    public void SetSpeed(float newSpeed)
+    public void SetSpeed(int newSpeed)
     {
-        CurrentSpeed = Mathf.Max(newSpeed, 1f);
+        CurrentSpeed = Mathf.Max(newSpeed, 1);
         OnSetSpeed?.Invoke(newSpeed);
     }
 
     public void SetRandomSpeed()
     {
-        float randomSpeed = Random.Range(_statsComponent.MinSpeed, _statsComponent.MaxSpeed);
+        int randomSpeed = Random.Range(_statsComponent.MinSpeed, _statsComponent.MaxSpeed);
         SetSpeed(randomSpeed);
     }
 
-    public void IncreaseSpeed(float amount)
+    public void IncreaseSpeed(int amount)
     {
         SetSpeed(CurrentSpeed + amount);
         OnIncreaseSpeed?.Invoke(CurrentSpeed);
     }
 
-    public void DecreaseSpeed(float amount)
+    public void DecreaseSpeed(int amount)
     {
         SetSpeed(CurrentSpeed - amount);
         OnDecreaseSpeed?.Invoke(CurrentSpeed);

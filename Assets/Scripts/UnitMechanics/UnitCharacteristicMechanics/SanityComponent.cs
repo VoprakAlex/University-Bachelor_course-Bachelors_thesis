@@ -4,17 +4,21 @@ using UnityEngine.Events;
 [RequireComponent(typeof(StatsComponent))]
 public class SanityComponent : MonoBehaviour
 {
+    [Header("Components")]
     [SerializeField] private StatsComponent _statsComponent;
 
+    [Header("Sanity")]
     [field: SerializeField] public int CurrentSanity { get; private set; }
     [field: SerializeField] public bool IsMad { get; private set; }
 
-    [SerializeField] public UnityEvent<int> OnSetSanity;
-    [SerializeField] public UnityEvent<int> OnDecreaseSanity;
-    [SerializeField] public UnityEvent<int> OnIncreaseSanity;
-
-    [SerializeField] public UnityEvent OnMadness;
-    [SerializeField] public UnityEvent OnRecover;
+    [Header("SanityEvents")]
+    public UnityEvent<int> OnSetSanity;
+    public UnityEvent<int> OnDecreaseSanity;
+    public UnityEvent<int> OnIncreaseSanity;
+    
+    [Header("MadnessEvents")]
+    public UnityEvent OnMadness;
+    public UnityEvent OnRecover;
 
     private void Awake()
     {

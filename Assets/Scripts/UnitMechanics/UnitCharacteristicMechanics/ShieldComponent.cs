@@ -4,13 +4,16 @@ using UnityEngine.Events;
 [RequireComponent(typeof(StatsComponent))]
 public class ShieldComponent : MonoBehaviour
 {
+    [Header("Components")]
     [SerializeField] private StatsComponent _statsComponent;
 
+    [Header("Sheild")]
     [field: SerializeField] public int CurrentShield { get; private set; }
 
-    [SerializeField] public UnityEvent<int> OnSetShield;
-    [SerializeField] public UnityEvent<int> OnDecreaseShield;
-    [SerializeField] public UnityEvent<int> OnIncreaseShield;
+    [Header("SheildEvents")]
+    public UnityEvent<int> OnSetShield;
+    public UnityEvent<int> OnDecreaseShield;
+    public UnityEvent<int> OnIncreaseShield;
 
     private void Awake()
     {

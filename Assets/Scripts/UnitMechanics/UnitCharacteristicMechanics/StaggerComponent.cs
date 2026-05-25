@@ -4,18 +4,23 @@ using UnityEngine.Events;
 [RequireComponent(typeof(StatsComponent), typeof(HealthComponent))]
 public class StaggerComponent : MonoBehaviour
 {
+    [Header("Components")]
     [SerializeField] private StatsComponent _statsComponent;
     [SerializeField] private HealthComponent _healthComponent;
 
+    [Header("Stagger")]
     [field: SerializeField] public bool IsStaggered { get; private set; }
     [field: SerializeField] public int StaggerAmount { get; private set; }
     [field: SerializeField] public int StaggerThreshold { get; private set; }
 
-    [SerializeField] public UnityEvent<int> OnSetStaggerThreshold;
-    [SerializeField] public UnityEvent<int> OnDecreaseStaggerThreshold;
-    [SerializeField] public UnityEvent<int> OnIncreaseStaggerThreshold;
-    [SerializeField] public UnityEvent OnStagger;
-    [SerializeField] public UnityEvent OnUnstagger;
+    [Header("StaggerThresholdEvents")]
+    public UnityEvent<int> OnSetStaggerThreshold;
+    public UnityEvent<int> OnDecreaseStaggerThreshold;
+    public UnityEvent<int> OnIncreaseStaggerThreshold;
+
+    [Header("StagerEvents")]
+    public UnityEvent OnStagger;
+    public UnityEvent OnUnstagger;
 
     private void Awake()
     {

@@ -4,18 +4,22 @@ using UnityEngine.Events;
 [RequireComponent(typeof(StatsComponent))]
 public class HealthComponent : MonoBehaviour
 {
+    [Header("Components")]
     [SerializeField] private StatsComponent _statsComponent;
 
+    [Header("Health")]
     [field: SerializeField] public int CurrentHealth { get; private set; }
     [field: SerializeField] public bool IsDead { get; private set; }
 
-    [SerializeField] public UnityEvent<int> OnSetHealth;
-    [SerializeField] public UnityEvent<int> OnSetMaxHealth;
-    [SerializeField] public UnityEvent<int> OnDecreaseHP;
-    [SerializeField] public UnityEvent<int> OnIncreaseHP;
+    [Header("HealthEvents")]
+    public UnityEvent<int> OnSetHealth;
+    public UnityEvent<int> OnSetMaxHealth;
+    public UnityEvent<int> OnDecreaseHP;
+    public UnityEvent<int> OnIncreaseHP;
 
-    [SerializeField] public UnityEvent OnDeath;
-    [SerializeField] public UnityEvent OnRevive;
+    [Header("DeathEvents")]
+    public UnityEvent OnDeath;
+    public UnityEvent OnRevive;
 
     private void Awake()
     {

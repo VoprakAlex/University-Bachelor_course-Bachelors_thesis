@@ -1,22 +1,27 @@
 using UnityEngine;
+using UnityEngine.Events;
 
-public class Dice : MonoBehaviour
+[System.Serializable]
+public class Dice
 {
-    public string Name { get; private set; }
-    public string Description { get; private set; }
+    [Header("Data")]
+    [field: SerializeField] public DiceData Data { get; private set; }
+    [field: SerializeField] public string Name { get; private set; }
+    [field: SerializeField] public string Description { get; private set; }
 
-    public int MinValue { get; private set; }
-    public int MaxValue { get; private set; }
+    [Header("Values")]
+    [field: SerializeField] public int MinValue { get; private set; }
+    [field: SerializeField] public int MaxValue { get; private set; }
+    [field: SerializeField] public int RolledValue { get; private set; }
 
-    public DiceType Type { get; private set; }
-    public DiceTargetType TargetType { get; private set; }
-    public DamageType DamageType { get; private set; }
-
-    public int RolledValue { get; private set; }
-    public bool WasUsedInClash { get; set; }
+    [Header("Types")]
+    [field: SerializeField] public DiceType Type { get; private set; }
+    [field: SerializeField] public DiceTargetType TargetType { get; private set; }
+    [field: SerializeField] public DamageType DamageType { get; private set; }
 
     public Dice(DiceData source)
     {
+        Data = source;
         Name = source.Name;
         Description = source.Description;
         MinValue = source.MinValue;

@@ -6,9 +6,11 @@ using UnityEngine.Events;
 [RequireComponent(typeof(StatsComponent), typeof(StaggerComponent))]
 public class ResistanceComponent : MonoBehaviour
 {
+    [Header("Components")]
     [SerializeField] private StatsComponent _statsComponent;
     [SerializeField] private StaggerComponent _staggerComponent;
 
+    [Header("Resistances")]
     [field: SerializedDictionary("DamageType", "ResistanceTier")]
     public SerializedDictionary<DamageType, ResistanceTier> CurrentDamageTypeResistances //{ get; private set; }
         = new SerializedDictionary<DamageType, ResistanceTier>();
@@ -17,11 +19,11 @@ public class ResistanceComponent : MonoBehaviour
     public SerializedDictionary<DamageAffinity, ResistanceTier> CurrentDamageAffinityResistances //{ get; private set; }
         = new SerializedDictionary<DamageAffinity, ResistanceTier>();
 
-
-    [SerializeField] public UnityEvent OnSetDamageTypeResistancesToMax;
-    [SerializeField] public UnityEvent OnSetDamageTypeResistancesToStandard;
-    [SerializeField] public UnityEvent<DamageType, ResistanceTier> OnDamageTypeResistanceChanged;
-    [SerializeField] public UnityEvent<DamageAffinity, ResistanceTier> OnDamageAffinityResistanceChanged;
+    [Header("ResistancesEvents")]
+    public UnityEvent OnSetDamageTypeResistancesToMax;
+    public UnityEvent OnSetDamageTypeResistancesToStandard;
+    public UnityEvent<DamageType, ResistanceTier> OnDamageTypeResistanceChanged;
+    public UnityEvent<DamageAffinity, ResistanceTier> OnDamageAffinityResistanceChanged;
 
     private void Awake()
     {

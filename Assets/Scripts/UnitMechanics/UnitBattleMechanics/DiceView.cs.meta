@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 03d6f968e4b97ae4ca82337461a25800
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - MinValue: {instanceID: 0}
+  - MaxValue: {instanceID: 0}
+  - DiceTypeImage: {instanceID: 0}
+  - Defend: {instanceID: 0}
+  - Evade: {instanceID: 0}
+  - Counter: {instanceID: 0}
+  - Slashing: {instanceID: 0}
+  - Piercing: {instanceID: 0}
+  - Bludgening: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
