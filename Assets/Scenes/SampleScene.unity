@@ -4688,7 +4688,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillRenderer
   SkillPrefab: {fileID: 1639641076222913702, guid: 07762d1e980495b4c980899fdce63a2c, type: 3}
   HandContainer: {fileID: 1562317019}
-  Spacing: {fileID: 0}
+  Spacing: {fileID: 1562317020}
   RenderedCards: []
   DrawedAllCards:
     m_PersistentCalls:
