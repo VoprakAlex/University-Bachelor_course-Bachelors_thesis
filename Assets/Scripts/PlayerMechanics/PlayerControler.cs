@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.Events;
 public class PlayerController : MonoBehaviour
 {
     [Header("Player")]
@@ -12,7 +12,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public SkillComponent _skillComponent;
 
     [Header("Renderer")]
-    [SerializeField] private SkillRenderer _skillRenderer;
+    [SerializeField] public SkillRenderer _skillRenderer;
+
+
+    [SerializeField] public bool CanChooseTarget = false;
+
+
+    public UnityEvent ShowStats;
+    public UnityEvent ClearStats;
 
     private void Awake()
     {
@@ -22,6 +29,26 @@ public class PlayerController : MonoBehaviour
     {
         //FillComponents();
         //RefreshHandView();
+    }
+
+    public void InvokeShowStats()
+    {
+        ShowStats?.Invoke();
+    }
+
+    public void InvokeClearStats()
+    {
+        ClearStats?.Invoke();
+    }
+
+    public void EnableTargetChoosing()
+    {
+        CanChooseTarget = true;
+    }
+
+    public void DisableTargetChoosing()
+    {
+        CanChooseTarget = false;
     }
 
     public void FillComponents()

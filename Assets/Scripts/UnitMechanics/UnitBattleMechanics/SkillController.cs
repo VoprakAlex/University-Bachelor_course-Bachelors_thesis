@@ -21,8 +21,7 @@ public class SkillController : MonoBehaviour,
         _rectTransform = GetComponent<RectTransform>();
         _defaultScale = transform.localScale;
 
-        if (_skillView == null)
-            _skillView = GetComponent<SkillView>();
+        _skillView = GetComponent<SkillView>();
 
         _playerController = FindAnyObjectByType<PlayerController>();
     }

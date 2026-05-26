@@ -1,3 +1,6 @@
+# =========================
+# Unity folders
+# =========================
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
@@ -6,10 +9,23 @@
 [Ll]ogs/
 UserSettings/
 
+# Unity generated
+MemoryCaptures/
+Sysinfo.txt
+
+# =========================
+# Visual Studio / Rider / IDE
+# =========================
+.vs/
+.vscode/
+.idea/
+
 *.csproj
 *.unityproj
 *.sln
+*.suo
 *.user
+*.userprefs
 *.pidb
 *.booproj
 *.svd
@@ -17,3 +33,34 @@ UserSettings/
 *.mdb
 *.opendb
 *.VC.db
+*.VC.opendb
+
+# =========================
+# Plastic SCM (Unity Version Control)
+# =========================
+.plastic/
+*.plastic
+
+# =========================
+# Build results
+# =========================
+*.apk
+*.aab
+*.exe
+*.app
+*.dll
+*.so
+*.dylib
+*.xcodeproj
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Logs / crashes
+# =========================
+*.log
+crash-report.log

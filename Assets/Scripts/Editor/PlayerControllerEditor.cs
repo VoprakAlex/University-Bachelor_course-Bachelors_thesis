@@ -31,5 +31,25 @@ public class PlayerControllerEditor : Editor
         {
             controller.FillComponents();
         }
+
+        if (GUILayout.Button("Show Stats"))
+        {
+            controller.InvokeShowStats();
+        }
+
+        if (GUILayout.Button("Clear Stats"))
+        {
+            controller.InvokeClearStats();
+        }
+
+        if (GUILayout.Button("Enable Target Selection"))
+        {
+            controller.EnableTargetChoosing();
+        }
+
+        if (GUILayout.Button("Disable Target Selection"))
+        {
+            controller.DisableTargetChoosing();
+        }
     }
 }

@@ -12,15 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b187fa571e6774783df61400a2d157, type: 3}
   m_Name: New Character
   m_EditorClassIdentifier: Assembly-CSharp::CharacterData
-  Name: 
+  Name: TestName
   MaxHP: 110
   MaxSP: 80
   StartingShield: 0
+  StaggerPercent: 0.1
   MinSpeed: 1
   MaxSpeed: 7
-  StaggerPercent: 50
-  StandardDamageType: 0
-  BaseAttackPower: 0
   StandardDamageTypeResistances:
     _serializedList:
     - Key: 0
