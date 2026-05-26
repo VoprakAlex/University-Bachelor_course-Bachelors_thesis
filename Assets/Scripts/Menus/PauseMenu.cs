@@ -4,6 +4,8 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenu;
 
+    [SerializeField] private GameObject objectToHide;
+
     private bool isPaused;
 
     private void Start()
@@ -11,28 +13,23 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(false);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (isPaused)
-                Resume();
-            else
-                Pause();
-        }
-    }
-
     public void Pause()
     {
         pauseMenu.SetActive(true);
+
+        if (objectToHide != null)
+            objectToHide.SetActive(false);
+
         Time.timeScale = 0f;
-        isPaused = true;
     }
 
     public void Resume()
     {
         pauseMenu.SetActive(false);
+
+        if (objectToHide != null)
+            objectToHide.SetActive(true);
+
         Time.timeScale = 1f;
-        isPaused = false;
     }
 }
