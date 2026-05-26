@@ -39,5 +39,8 @@ public class SkillController : MonoBehaviour,
     public void OnPointerClick(PointerEventData eventData)
     {
         _playerController._skillComponent.SetCurrentSkill(_skillView.Data);
+
+        _playerController._targetComponent?.ClearTargets(); 
+        _playerController.EnableTargetChoosing();
     }
 }

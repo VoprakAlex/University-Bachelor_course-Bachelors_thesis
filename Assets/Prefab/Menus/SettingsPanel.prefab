@@ -2572,7 +2572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9acb5deae8c75a2459943056d8f29e00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SettingsMenu
-  settingsPanel: {fileID: 5726531033902888181}
+  settingsPanel: {fileID: 6960886108960662446}
   secondObjectToHide: {fileID: 0}
 --- !u!1 &6214333889838624499
 GameObject:

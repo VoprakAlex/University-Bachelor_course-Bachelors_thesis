@@ -1087,7 +1087,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3633abc23b47e504c907808ab79ad008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseMenu
-  pauseMenu: {fileID: 4906294342392210235}
+  pauseMenu: {fileID: 6313134347358863946}
+  objectToHide: {fileID: 0}
 --- !u!1 &5644328130603287117
 GameObject:
   m_ObjectHideFlags: 0

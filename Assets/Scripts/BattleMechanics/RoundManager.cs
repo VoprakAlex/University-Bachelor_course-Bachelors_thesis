@@ -23,6 +23,8 @@ public class RoundManager : MonoBehaviour
     [Header("Current")]
     [SerializeField] public GameObject CurrentUnit;
 
+    [SerializeField] public bool IsRoundPrepared;
+
     [Header("TurnEvents")]
     public UnityEvent RoundEnd;
 
@@ -47,18 +49,12 @@ public class RoundManager : MonoBehaviour
         }
     }
 
-    public void StartRound()
+    public void PrepareRound()
     {
         BuildRoundQueue();
 
+        IsRoundPrepared = true;
         TargetUpdateChannel.SendEventMessage();
-    }
-
-    public IEnumerator WaitNextUnit()
-    {
-        yield return new WaitForSeconds(2f);
-
-        NextUnit();
     }
 
     public void EndRound()
@@ -128,21 +124,60 @@ public class RoundManager : MonoBehaviour
         }
     }
 
-
-    public void StartPlayerTurn(GameObject Player)
+    public void StartBattle()
     {
-        CombatManager.SetAttacker(Player);
+        if (CurrentUnit == null)
+            return;
+
+        if (CurrentUnit.CompareTag(GameManager.PlayerTag) && PlayerController != null)
+        {
+            PlayerController.ClearAllCards();
+            PlayerController.InvokeClearStats();
+            PlayerController.DisableTargetChoosing();
+        }
+
+        CombatManager.SetAttacker(CurrentUnit);
         CombatManager.ExecuteCombat();
-        //PlayerController.PlayerObject = Player;
+    }
 
-        //PlayerController.FillComponents();
+    public void StartRound()
+    {
+        if (!IsRoundPrepared)
+            return;
 
-        //PlayerController.RefreshHandView();
+        IsRoundPrepared = false;
+        NextUnit();
+    }
+
+    public void StartPlayerTurn(GameObject player)
+    {
+        if (PlayerController == null)
+            return;
+
+        PlayerController.PlayerObject = player;
+        PlayerController.FillComponents();
+        PlayerController.DisableTargetChoosing();
+
+        PlayerController.RefreshHandView();
+        PlayerController.InvokeShowStats();
     }
 
     public void EndTurn()
     {
         Debug.Log("EndTurn");
+
+        SkillComponent skillComponent = CurrentUnit.GetComponent<SkillComponent>();
+        if (skillComponent != null)
+        {
+            skillComponent.ClearCurrentSkill();
+            skillComponent.SetNotClashing();
+        }
+
+        TargetComponent targetComponent = CurrentUnit.GetComponent<TargetComponent>();
+        if (targetComponent != null)
+        {
+            targetComponent.ClearTargets();
+        }
 
         CurrentUnit = null;
 

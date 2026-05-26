@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] public bool CanChooseTarget = false;
 
+    [SerializeField] public RoundManager RoundManager;
+
 
     public UnityEvent ShowStats;
     public UnityEvent ClearStats;
@@ -24,11 +26,36 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _skillRenderer = GetComponent<SkillRenderer>();
+
+        RoundManager = FindAnyObjectByType<RoundManager>();
     }
     private void Start()
     {
         //FillComponents();
         //RefreshHandView();
+    }
+
+    public void HandleActionButton()
+    {
+        if (RoundManager == null)
+            return;
+
+        if (RoundManager.IsRoundPrepared)
+        {
+            RoundManager.StartRound();
+            return;
+        }
+
+        if (RoundManager.CurrentUnit != PlayerObject)
+            return;
+
+        if (_skillComponent == null || _skillComponent.CurrentSkill == null)
+            return;
+
+        if (_targetComponent == null || _targetComponent.MainTarget == null)
+            return;
+
+        RoundManager.StartBattle();
     }
 
     public void InvokeShowStats()

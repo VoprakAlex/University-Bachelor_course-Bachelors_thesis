@@ -12,9 +12,9 @@ public class RoundManagerEditor : Editor
 
         GUILayout.Space(10);
 
-        if (GUILayout.Button("Start Round"))
+        if (GUILayout.Button("Prepare Round"))
         {
-            roundManager.StartRound();
+            roundManager.PrepareRound();
         }
     }
 }

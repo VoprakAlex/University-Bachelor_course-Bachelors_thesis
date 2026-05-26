@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //StartCoroutine(WaitForAllUnitsReadyAndStartRound());
+        StartCoroutine(WaitForAllUnitsReadyAndStartRound());
     }
 
     public IEnumerator WaitForAllUnitsReadyAndStartRound()
@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
 
-        RoundManager.StartRound();
+        RoundManager.PrepareRound();
     }
 
     public void RegisterAllObjects()
