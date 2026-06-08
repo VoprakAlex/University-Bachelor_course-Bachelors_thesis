@@ -6,7 +6,7 @@ using Unity.Properties;
 using System.Linq;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "LeastAttackDiceSkill", story: "Agent picks skill with least Attack dice", category: "Action", id: "c5702200b60fa757ff8409174d782ef8")]
+[NodeDescription(name: "LeastAttackDiceSkill", story: "Agent picks skill with least Attack dice", category: "Skill", id: "c5702200b60fa757ff8409174d782ef8")]
 public partial class LeastAttackDiceSkillAction : Action
 {
     protected override Status OnStart()

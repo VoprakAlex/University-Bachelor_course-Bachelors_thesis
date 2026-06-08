@@ -6,14 +6,13 @@ using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "RandomTarget", story: "Targets random enemy [SelectedTarget]", category: "Target", id: "601d1d600c3afd7b3217c617f71fe010")]
-public partial class RandomTargetAction : Action
+[NodeDescription(name: "LeastStaggerThresholdTarget", story: "Agent targets lowest HP minus stagger threshold [SelectedTarget]", category: "Target", id: "2a51ab0c3722b5cb75ca2f234db39e19")]
+public partial class LeastStaggerThresholdTargetAction : Action
 {
     private TargetComponent _targetComponent;
     private GameManager _gameManager;
 
-    [SerializeReference]
-    public BlackboardVariable<GameObject> SelectedTarget;
+    [SerializeReference] public BlackboardVariable<GameObject> SelectedTarget;
 
     protected override Status OnStart()
     {
@@ -24,7 +23,6 @@ public partial class RandomTargetAction : Action
             return Status.Failure;
 
         GameObject ownerCharacter = GameObject.transform.root.gameObject;
-
         List<GameObject> possibleTargets = new();
 
         switch (ownerCharacter.tag)
@@ -43,24 +41,38 @@ public partial class RandomTargetAction : Action
                 break;
 
             case GameManager.PlayerTag:
-                return Status.Failure;
+                return Status.Success;
         }
 
-        if (possibleTargets.Count == 0)
+        GameObject selectedCharacter = null;
+        int bestDiff = int.MaxValue;
+
+        foreach (var target in possibleTargets)
+        {
+            if (target == null)
+                continue;
+
+            HealthComponent healthComponent = target.GetComponent<HealthComponent>();
+            StaggerComponent staggerComponent = target.GetComponent<StaggerComponent>();
+            if (healthComponent == null || staggerComponent == null)
+                continue;
+
+            int diff = healthComponent.CurrentHealth - staggerComponent.StaggerThreshold;
+            if (selectedCharacter == null || diff < bestDiff)
+            {
+                bestDiff = diff;
+                selectedCharacter = target;
+            }
+        }
+
+        if (selectedCharacter == null)
             return Status.Failure;
 
-        GameObject selectedCharacter =
-            possibleTargets[UnityEngine.Random.Range(0, possibleTargets.Count)];
-
-        ActionComponent[] actions =
-            selectedCharacter.GetComponentsInChildren<ActionComponent>();
-
+        ActionComponent[] actions = selectedCharacter.GetComponentsInChildren<ActionComponent>();
         if (actions.Length == 0)
             return Status.Failure;
 
-        ActionComponent selectedAction =
-            actions[UnityEngine.Random.Range(0, actions.Length)];
-
+        ActionComponent selectedAction = actions[UnityEngine.Random.Range(0, actions.Length)];
         _targetComponent.SetMainTarget(selectedAction.gameObject);
 
         if (SelectedTarget != null)
@@ -71,7 +83,7 @@ public partial class RandomTargetAction : Action
 
     protected override Status OnUpdate()
     {
-        return CurrentStatus;
+        return Status.Success;
     }
 
     protected override void OnEnd()

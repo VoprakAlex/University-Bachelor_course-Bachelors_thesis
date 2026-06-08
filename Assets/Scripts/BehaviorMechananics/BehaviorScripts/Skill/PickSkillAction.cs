@@ -5,7 +5,7 @@ using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "PickSkill", story: "Agent picks [SkillData]", category: "Action", id: "84412704f2848676b637383604e8dc93")]
+[NodeDescription(name: "PickSkill", story: "Agent picks [SkillData]", category: "Skill", id: "84412704f2848676b637383604e8dc93")]
 public partial class PickSkillAction : Action
 {
     [SerializeReference]

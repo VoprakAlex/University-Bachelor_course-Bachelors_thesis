@@ -5,7 +5,7 @@ using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "FirstSkill", story: "Agent picks first skill in hand", category: "Action", id: "7b9b53126adba3107cdb8dc4bf6b60dc")]
+[NodeDescription(name: "FirstSkill", story: "Agent picks first skill in hand", category: "Skill", id: "7b9b53126adba3107cdb8dc4bf6b60dc")]
 public partial class FirstSkillAction : Action
 {
 

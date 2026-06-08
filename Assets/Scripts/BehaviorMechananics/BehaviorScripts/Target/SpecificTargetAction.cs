@@ -6,11 +6,14 @@ using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "RandomTarget", story: "Targets random enemy [SelectedTarget]", category: "Target", id: "601d1d600c3afd7b3217c617f71fe010")]
-public partial class RandomTargetAction : Action
+[NodeDescription(name: "SpecificTarget", story: "Agent targets [Target] and selects in [SelectedTarget]", category: "Target", id: "3282096cf1c9763ebc0e979ea1d3c8c9")]
+public partial class SpecificTargetAction : Action
 {
     private TargetComponent _targetComponent;
     private GameManager _gameManager;
+
+    [SerializeReference]
+    public BlackboardVariable<GameObject> Target;
 
     [SerializeReference]
     public BlackboardVariable<GameObject> SelectedTarget;
@@ -23,6 +26,43 @@ public partial class RandomTargetAction : Action
         if (_targetComponent == null || _gameManager == null)
             return Status.Failure;
 
+        GameObject targetCharacter = Target?.Value;
+
+        // Пытаемся найти указанную цель среди живых
+        if (targetCharacter != null && IsAliveTarget(targetCharacter))
+        {
+            ActionComponent[] actions =
+                targetCharacter.GetComponentsInChildren<ActionComponent>();
+
+            if (actions.Length > 0)
+            {
+                ActionComponent selectedAction =
+                    actions[UnityEngine.Random.Range(0, actions.Length)];
+
+                _targetComponent.SetMainTarget(selectedAction.gameObject);
+
+                if (SelectedTarget != null)
+                    SelectedTarget.Value = selectedAction.gameObject;
+
+                return Status.Success;
+            }
+        }
+
+        // Если цель не найдена — выбираем случайную по фракциям
+        return SelectRandomFactionTarget();
+    }
+
+    private bool IsAliveTarget(GameObject target)
+    {
+        return _gameManager.PlayerAlive.Contains(target)
+            || _gameManager.AllyAlive.Contains(target)
+            || _gameManager.AllyImportantAlive.Contains(target)
+            || _gameManager.EnemyAlive.Contains(target)
+            || _gameManager.EnemyBossAlive.Contains(target);
+    }
+
+    private Status SelectRandomFactionTarget()
+    {
         GameObject ownerCharacter = GameObject.transform.root.gameObject;
 
         List<GameObject> possibleTargets = new();
@@ -43,7 +83,7 @@ public partial class RandomTargetAction : Action
                 break;
 
             case GameManager.PlayerTag:
-                return Status.Failure;
+                return Status.Success;
         }
 
         if (possibleTargets.Count == 0)

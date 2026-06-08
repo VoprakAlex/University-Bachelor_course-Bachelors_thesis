@@ -6,8 +6,8 @@ using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "RandomTarget", story: "Targets random enemy [SelectedTarget]", category: "Target", id: "601d1d600c3afd7b3217c617f71fe010")]
-public partial class RandomTargetAction : Action
+[NodeDescription(name: "FirstTarget", story: "Targets first enemy [SelectedTarget]", category: "Target", id: "f265da53b725f3348cd70c8264ffeff6")]
+public partial class FirstTargetAction : Action
 {
     private TargetComponent _targetComponent;
     private GameManager _gameManager;
@@ -43,14 +43,13 @@ public partial class RandomTargetAction : Action
                 break;
 
             case GameManager.PlayerTag:
-                return Status.Failure;
+                return Status.Success;
         }
 
         if (possibleTargets.Count == 0)
             return Status.Failure;
 
-        GameObject selectedCharacter =
-            possibleTargets[UnityEngine.Random.Range(0, possibleTargets.Count)];
+        GameObject selectedCharacter = possibleTargets[0];
 
         ActionComponent[] actions =
             selectedCharacter.GetComponentsInChildren<ActionComponent>();
@@ -58,8 +57,7 @@ public partial class RandomTargetAction : Action
         if (actions.Length == 0)
             return Status.Failure;
 
-        ActionComponent selectedAction =
-            actions[UnityEngine.Random.Range(0, actions.Length)];
+        ActionComponent selectedAction = actions[0];
 
         _targetComponent.SetMainTarget(selectedAction.gameObject);
 

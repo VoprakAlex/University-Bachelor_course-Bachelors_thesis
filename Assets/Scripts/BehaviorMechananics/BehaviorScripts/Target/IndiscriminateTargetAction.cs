@@ -6,7 +6,7 @@ using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "IndiscriminateTarget", story: "Targets random unit [SelectedTarget]", category: "Action", id: "79316144a327f8967d511cbe7545e330")]
+[NodeDescription(name: "IndiscriminateTarget", story: "Targets random unit [SelectedTarget]", category: "Target", id: "79316144a327f8967d511cbe7545e330")]
 public partial class IndiscriminateTargetAction : Action
 {
     [Header("Components")]

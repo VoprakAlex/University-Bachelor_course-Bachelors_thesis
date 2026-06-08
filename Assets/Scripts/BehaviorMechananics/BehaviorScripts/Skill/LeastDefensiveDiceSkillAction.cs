@@ -6,7 +6,7 @@ using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "LeastDefensiveDiceSkill", story: "Agent picks skill with least defensive dice", category: "Action", id: "b11c7be355848edd4b1ee7f1dedff38a")]
+[NodeDescription(name: "LeastDefensiveDiceSkill", story: "Agent picks skill with least defensive dice", category: "Skill", id: "b11c7be355848edd4b1ee7f1dedff38a")]
 public partial class LeastDefensiveDiceSkillAction : Action
 {
     protected override Status OnStart()
