@@ -5,14 +5,10 @@ public class TargetStatsView : MonoBehaviour
 {
     [Header("Text Fields")]
     [SerializeField] public TMP_Text NameText;
-    [SerializeField] public TMP_Text CurrentHPText;
-    [SerializeField] public TMP_Text MaxHPText;
-    [SerializeField] public TMP_Text StaggerTresholdText;
-    [SerializeField] public TMP_Text CurrentSPText;
-    [SerializeField] public TMP_Text MaxSPText;
-    [SerializeField] public TMP_Text MinSpeedText;
-    [SerializeField] public TMP_Text MaxSpeedText;
-    [SerializeField] public TMP_Text CurrentSpeedText;
+    
+
+    [Header("Current Skill")]
+    [SerializeField] private SkillView SkillView;
 
     [Header("Damage Type Multipliers")]
     [SerializeField] public TMP_Text SlashingMultiplierText;
@@ -36,7 +32,12 @@ public class TargetStatsView : MonoBehaviour
     private SpeedComponent _speedComponent;
     private ResistanceComponent _resistanceComponent;
 
+    private ActionComponent _actionComponent;
+    private SkillComponent _skillComponent;
+
     private GameObject CurrentTarget;
+
+    [SerializeField] private GameObject Card;
 
     private void Start()
     {
@@ -49,10 +50,12 @@ public class TargetStatsView : MonoBehaviour
 
         CurrentTarget = target;
 
+        gameObject.SetActive(true);
+
         RefreshTarget();
         UpdateAll();
 
-        gameObject.SetActive(true);
+       
     }
 
     public void Hide()
@@ -66,77 +69,55 @@ public class TargetStatsView : MonoBehaviour
     {
         if (CurrentTarget == null) return;
 
-        _statsComponent = CurrentTarget.GetComponent<StatsComponent>();
-        _healthComponent = CurrentTarget.GetComponent<HealthComponent>();
-        _staggerComponent = CurrentTarget.GetComponent<StaggerComponent>();
-        _sanityComponent = CurrentTarget.GetComponent<SanityComponent>();
-        _speedComponent = CurrentTarget.GetComponent<SpeedComponent>();
-        _resistanceComponent = CurrentTarget.GetComponent<ResistanceComponent>();
+        _statsComponent = CurrentTarget.GetComponentInParent<StatsComponent>();
+
+        _healthComponent = CurrentTarget.GetComponentInParent<HealthComponent>();
+
+        _staggerComponent = CurrentTarget.GetComponentInParent<StaggerComponent>();
+
+        _sanityComponent = CurrentTarget.GetComponentInParent<SanityComponent>();
+
+        _speedComponent = CurrentTarget.GetComponentInParent<SpeedComponent>();
+
+        _resistanceComponent = CurrentTarget.GetComponentInParent<ResistanceComponent>();
+
+        _actionComponent = CurrentTarget.GetComponentInChildren<ActionComponent>();
+
+        if (_actionComponent != null)
+            _skillComponent = _actionComponent.GetComponent<SkillComponent>();
     }
 
     public void UpdateAll()
     {
         UpdateName();
 
-        UpdateCurrentHP();
-        UpdateMaxHP();
-
-        UpdateStaggerThreshold();
-
-        UpdateCurrentSP();
-        UpdateMaxSP();
-
-        UpdateMinSpeed();
-        UpdateCurrentSpeed();
-        UpdateMaxSpeed();
+        UpdateCurrentSkill();
 
         UpdateDamageTypes();
         UpdateDamageAffinities();
     }
+    public void UpdateCurrentSkill()
+    {
+        if (SkillView == null)
+            return;
 
+        if (_skillComponent == null)
+            return;
+
+        if (_skillComponent.CurrentSkill == null || string.IsNullOrEmpty(_skillComponent.CurrentSkill.Name))
+        {
+            Card.SetActive(false);
+            return;
+        }
+        else
+        {
+            SkillView.SetSkill(_skillComponent.CurrentSkill);
+            Card.SetActive(true);
+        }
+    }
     public void UpdateName()
     {
         NameText.text = _statsComponent.Character.Name;
-    }
-
-    public void UpdateCurrentHP()
-    {
-        CurrentHPText.text = _healthComponent.CurrentHealth.ToString();
-    }
-
-    public void UpdateMaxHP()
-    {
-        MaxHPText.text = _statsComponent.MaxHP.ToString();
-    }
-
-    public void UpdateStaggerThreshold()
-    {
-        StaggerTresholdText.text = _staggerComponent.StaggerThreshold.ToString();
-    }
-
-    public void UpdateCurrentSP()
-    {
-        CurrentSPText.text = _sanityComponent.CurrentSanity.ToString();
-    }
-
-    public void UpdateMaxSP()
-    {
-        MaxSPText.text = _statsComponent.MaxSP.ToString();
-    }
-
-    public void UpdateMinSpeed()
-    {
-        MinSpeedText.text = _statsComponent.MinSpeed.ToString();
-    }
-
-    public void UpdateCurrentSpeed()
-    {
-        CurrentSpeedText.text = _speedComponent.CurrentSpeed.ToString();
-    }
-
-    public void UpdateMaxSpeed()
-    {
-        MaxSpeedText.text = _statsComponent.MaxSpeed.ToString();
     }
 
     public void UpdateDamageTypes()
@@ -182,17 +163,7 @@ public class TargetStatsView : MonoBehaviour
     {
         NameText.text = "";
 
-        CurrentHPText.text = "";
-        MaxHPText.text = "";
-
-        StaggerTresholdText.text = "";
-
-        CurrentSPText.text = "";
-        MaxSPText.text = "";
-
-        MinSpeedText.text = "";
-        CurrentSpeedText.text = "";
-        MaxSpeedText.text = "";
+        
 
         SlashingMultiplierText.text = "";
         PiercingMultiplierText.text = "";

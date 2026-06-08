@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: New Character
   m_EditorClassIdentifier: Assembly-CSharp::CharacterData
   Name: TestName
-  MaxHP: 110
-  MaxSP: 80
+  MaxHP: 10
+  MaxSP: 10
   StartingShield: 0
-  StaggerPercent: 0.1
+  StaggerPercent: 0.6
   MinSpeed: 1
   MaxSpeed: 7
   StandardDamageTypeResistances:

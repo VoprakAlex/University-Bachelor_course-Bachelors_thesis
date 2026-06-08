@@ -26,8 +26,6 @@ public class DynamicSpacing : MonoBehaviour
     {
         int CardCount = transform.childCount;
 
-        Debug.Log(CardCount);
-
         if (CardCount <= 6)
         {
             LayoutGroup.spacing = 0;

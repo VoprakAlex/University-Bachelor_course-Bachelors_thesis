@@ -29,10 +29,10 @@ public class PlayerController : MonoBehaviour
 
         RoundManager = FindAnyObjectByType<RoundManager>();
     }
+
     private void Start()
     {
-        //FillComponents();
-        //RefreshHandView();
+   
     }
 
     public void HandleActionButton()
@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour
         if (_targetComponent == null || _targetComponent.MainTarget == null)
             return;
 
+        _handComponent.Hand.Remove(_skillComponent.CurrentSkill);
         RoundManager.StartBattle();
     }
 
@@ -80,10 +81,14 @@ public class PlayerController : MonoBehaviour
 
     public void FillComponents()
     {
-        _handComponent = PlayerObject.GetComponent<HandComponent>();
-        _targetComponent = PlayerObject.GetComponent<TargetComponent>();
-        _skillComponent = PlayerObject.GetComponent<SkillComponent>();
         _statsComponent = PlayerObject.GetComponent<StatsComponent>();
+
+        ActionComponent action =
+            PlayerObject.GetComponentInChildren<ActionComponent>();
+
+        _handComponent = action.GetComponent<HandComponent>();
+        _targetComponent = action.GetComponent<TargetComponent>();
+        _skillComponent = action.GetComponent<SkillComponent>();
     }
 
     public void DrawAllCards()

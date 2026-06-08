@@ -13,6 +13,9 @@ public class ClashHandler : MonoBehaviour
         TargetComponent targetComponent = attacker.GetComponent<TargetComponent>();
 
         Target = targetComponent.MainTarget;
+        Debug.Log("-------");
+        Debug.Log(attacker);
+        Debug.Log(targetComponent.MainTarget);
     }
 
     public bool ShouldRemove(Dice evade, Dice attack)
@@ -27,12 +30,19 @@ public class ClashHandler : MonoBehaviour
 
     public void ExecuteClashSkill(Skill attackerSkill, Skill targetSkill)
     {
+        
+
         while (attackerSkill.Dice.Count > 0 && targetSkill.Dice.Count > 0)
         {
             Dice attackerDice = attackerSkill.Dice[0];
             Dice targetDice = targetSkill.Dice[0];
 
-            ExecuteClashDice( attackerDice, targetDice, attackerSkill.DamageAffinity, targetSkill.DamageAffinity);
+            Debug.Log("-------");
+
+            Debug.Log(attackerSkill.DamageAffinity);
+            Debug.Log(targetSkill.DamageAffinity);
+
+            ExecuteClashDice(attackerDice, targetDice, attackerSkill.DamageAffinity, targetSkill.DamageAffinity);
 
             if (ShouldRemove(attackerDice, targetDice))
             {
@@ -59,13 +69,26 @@ public class ClashHandler : MonoBehaviour
         }
     }
 
-    public void ExecuteClashDice( Dice attackerDice, Dice targetDice, DamageAffinity attackerAffinity, DamageAffinity targetAffinity)
+    public void ExecuteClashDice(Dice attackerDice, Dice targetDice, DamageAffinity attackerAffinity, DamageAffinity targetAffinity)
     {
-        StatsComponent attackerStats = Attacker.GetComponent<StatsComponent>();
-        StatsComponent targetStats = Target.GetComponent<StatsComponent>();
+        StatsComponent attackerStats = Attacker.GetComponentInParent<StatsComponent>();
+        StatsComponent targetStats = Target.GetComponentInParent<StatsComponent>();
 
         int attackerRoll = attackerDice.Roll();
         int targetRoll = targetDice.Roll();
+        Debug.Log("-------");
+        Debug.Log(attackerDice.Type);
+        Debug.Log(attackerDice.DamageType);
+
+        Debug.Log(attackerAffinity);
+        Debug.Log(attackerRoll);
+        Debug.Log(targetDice.Type);
+        Debug.Log(targetDice.DamageType);
+
+        Debug.Log(targetAffinity);
+        Debug.Log(targetRoll);
+
+
 
         // ATTACK vs ATTACK
         if (attackerDice.Type == DiceType.Attack && targetDice.Type == DiceType.Attack)
@@ -111,7 +134,7 @@ public class ClashHandler : MonoBehaviour
             return;
         }
 
-        
+
         // ATTACK vs EVADE
         if (attackerDice.Type == DiceType.Attack && targetDice.Type == DiceType.Evade)
         {
@@ -159,12 +182,6 @@ public class ClashHandler : MonoBehaviour
 
                 break;
 
-            //case DiceType.Defend:
-
-            //attackerStats.IncreaseShield(rolledValue);
-
-            //break;
-
             default:
                 break;
         }
@@ -190,5 +207,9 @@ public class ClashHandler : MonoBehaviour
         SkillComponent targetSkillComponent = Target.GetComponent<SkillComponent>();
 
         ExecuteClashSkill(attackerSkillComponent.CurrentSkill, targetSkillComponent.CurrentSkill);
+
+        Attacker = null;
+        Target = null;
+
     }
 }

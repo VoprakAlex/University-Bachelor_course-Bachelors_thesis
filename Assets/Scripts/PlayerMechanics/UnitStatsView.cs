@@ -9,14 +9,9 @@ public class UnitStatsView : MonoBehaviour
 
     [Header("Text Fields")]
     [SerializeField] public TMP_Text NameText;
-    [SerializeField] public TMP_Text CurrentHPText;
-    [SerializeField] public TMP_Text MaxHPText;
-    [SerializeField] public TMP_Text StaggerTresholdText;
-    [SerializeField] public TMP_Text CurrentSPText;
-    [SerializeField] public TMP_Text MaxSPText;
-    [SerializeField] public TMP_Text MinSpeedText;
-    [SerializeField] public TMP_Text MaxSpeedText;
-    [SerializeField] public TMP_Text CurrentSpeedText;
+
+    [Header("Current Skill")]
+    [SerializeField] private SkillView SkillView;
 
     [Header("Damage Type Multipliers")]
     [SerializeField] public TMP_Text SlashingMultiplierText;
@@ -39,6 +34,9 @@ public class UnitStatsView : MonoBehaviour
     private SanityComponent _sanityComponent;
     private SpeedComponent _speedComponent;
     private ResistanceComponent _resistanceComponent;
+
+    private ActionComponent _actionComponent;
+    private SkillComponent _skillComponent;
 
     private void Awake()
     {
@@ -63,6 +61,11 @@ public class UnitStatsView : MonoBehaviour
         _sanityComponent = target.GetComponent<SanityComponent>();
         _speedComponent = target.GetComponent<SpeedComponent>();
         _resistanceComponent = target.GetComponent<ResistanceComponent>();
+
+        _actionComponent = target.GetComponentInChildren<ActionComponent>();
+
+        if (_actionComponent != null)
+            _skillComponent = _actionComponent.GetComponent<SkillComponent>();
     }
 
     public void Show()
@@ -70,6 +73,8 @@ public class UnitStatsView : MonoBehaviour
         RefreshTarget();
 
         UpdateAll();
+
+        UpdateCurrentSkill();
 
         gameObject.SetActive(true);
     }
@@ -85,19 +90,6 @@ public class UnitStatsView : MonoBehaviour
     {
         UpdateName();
 
-        UpdateCurrentHP();
-        UpdateMaxHP();
-
-        UpdateStaggerThreshold();
-
-        UpdateCurrentSP();
-        UpdateMaxSP();
-
-        UpdateMinSpeed();
-        UpdateCurrentSpeed();
-        UpdateMaxSpeed();
-
-
         UpdateDamageTypes();
         UpdateDamageAffinities();
     }
@@ -105,46 +97,6 @@ public class UnitStatsView : MonoBehaviour
     public void UpdateName()
     {
         NameText.text = _statsComponent.Character.Name;
-    }
-
-    public void UpdateCurrentHP()
-    {
-        CurrentHPText.text = _healthComponent.CurrentHealth.ToString();
-    }
-
-    public void UpdateMaxHP()
-    {
-        MaxHPText.text = _statsComponent.MaxHP.ToString();
-    }
-
-    public void UpdateStaggerThreshold()
-    {
-        StaggerTresholdText.text = _staggerComponent.StaggerThreshold.ToString();
-    }
-
-    public void UpdateCurrentSP()
-    {
-        CurrentSPText.text = _sanityComponent.CurrentSanity.ToString();
-    }
-
-    public void UpdateMaxSP()
-    {
-        MaxSPText.text = _statsComponent.MaxSP.ToString();
-    }
-
-    public void UpdateMinSpeed()
-    {
-        MinSpeedText.text = _statsComponent.MinSpeed.ToString();
-    }
-
-    public void UpdateCurrentSpeed()
-    {
-        CurrentSpeedText.text = _speedComponent.CurrentSpeed.ToString();
-    }
-
-    public void UpdateMaxSpeed()
-    {
-        MaxSpeedText.text = _statsComponent.MaxSpeed.ToString();
     }
 
     public void UpdateDamageTypes()
@@ -185,22 +137,25 @@ public class UnitStatsView : MonoBehaviour
         MindMultiplierText.text =
             _resistanceComponent.CurrentDamageAffinityResistances[DamageAffinity.Mind].GetMultiplier().ToString("0.00");
     }
+    public void UpdateCurrentSkill()
+    {
+        if (SkillView == null)
+            return;
 
+        if (_skillComponent == null)
+            return;
+
+        if (_skillComponent.CurrentSkill == null)
+        {
+            SkillView.gameObject.SetActive(false);
+            return;
+        }
+
+        SkillView.SetSkill(_skillComponent.CurrentSkill);
+    }
     public void ClearTexts()
     {
         NameText.text = "";
-
-        CurrentHPText.text = "";
-        MaxHPText.text = "";
-
-        StaggerTresholdText.text = "";
-
-        CurrentSPText.text = "";
-        MaxSPText.text = "";
-
-        MinSpeedText.text = "";
-        CurrentSpeedText.text = "";
-        MaxSpeedText.text = "";
 
         SlashingMultiplierText.text = "";
         PiercingMultiplierText.text = "";

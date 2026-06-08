@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b187fa571e6774783df61400a2d157, type: 3}
+  m_Name: Enemy_8
+  m_EditorClassIdentifier: 
+  Name: Enemy_8
+  MaxHP: 30
+  MaxSP: 10
+  CurrentHP: 1
+  CurrentSP: 1
+  CurrentSlachDamageMultiplier: 1
+  CurrentPierceDamageMultiplier: 1
+  CurrentBluntDamageMultiplier: 1
+  CurrentSanityDamageMultiplier: 1
+  NormalSlachDamageMultiplier: 1
+  NormalPierceDamageMultiplier: 1
+  NormalBluntDamageMultiplier: 1
+  NormalSanityDamageMultiplier: 1
+  LoseNextTurn: 0

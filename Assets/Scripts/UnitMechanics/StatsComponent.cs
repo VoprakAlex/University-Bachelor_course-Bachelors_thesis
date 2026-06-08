@@ -7,15 +7,14 @@ using AYellowpaper.SerializedCollections;
 public class StatsComponent : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private HealthComponent _healthComponent;
-    [SerializeField] private ShieldComponent _shieldComponent;
-    [SerializeField] private StaggerComponent _staggerComponent;
-    [SerializeField] private SanityComponent _sanityComponent;
-    [SerializeField] private ResistanceComponent _resistanceComponent;
-    [SerializeField] private SpeedComponent _speedComponent;
-    [SerializeField] private TargetComponent _targetComponent;
-    [SerializeField] private HandComponent _handComponent;
-    [SerializeField] private SkillComponent _skillComponent;
+    private HealthComponent _healthComponent;
+    private ShieldComponent _shieldComponent;
+    private StaggerComponent _staggerComponent;
+    private SanityComponent _sanityComponent;
+    private ResistanceComponent _resistanceComponent;
+    private SpeedComponent _speedComponent;
+
+    private CharacterStatsUI characterStatsUI;
 
     [Header("Character")]
     [SerializeField] public CharacterData Character;
@@ -60,12 +59,8 @@ public class StatsComponent : MonoBehaviour
             _resistanceComponent = GetComponent<ResistanceComponent>();
         if (_speedComponent == null)
             _speedComponent = GetComponent<SpeedComponent>();
-        if (_targetComponent == null)
-            _targetComponent = GetComponent<TargetComponent>();
-        if (_handComponent == null)
-            _handComponent = GetComponent<HandComponent>();
-        if (_skillComponent == null)
-            _skillComponent = GetComponent<SkillComponent>();
+        if (characterStatsUI == null)
+            characterStatsUI = GetComponent<CharacterStatsUI>();
 
         MaxHP = Character.MaxHP;
         MaxSP = Character.MaxSP;
@@ -84,23 +79,17 @@ public class StatsComponent : MonoBehaviour
         {
             AllSkills.Add(Instantiate(skillData));
         }
-
-        FindAnyObjectByType<RoundManager>().RoundEnd.AddListener(DrawSkill);
-
-        Debug.Log("Awake");
     }
 
     private void Start()
     {
+        _staggerComponent.SetStaggerAmount();
         _healthComponent.SetToMax();
         _sanityComponent.SetToMax();
         _shieldComponent.SetToStarting();
         _resistanceComponent.SetResistanceToStandard();
-        _handComponent.RebuildDeck();
-        _handComponent.DrawSkill();
-        _handComponent.DrawSkill();
-        _handComponent.DrawSkill();
-        _handComponent.DrawSkill();
+
+        characterStatsUI.InitializeUI();
 
         Ready = true;
     }
@@ -168,11 +157,6 @@ public class StatsComponent : MonoBehaviour
     public void IncreaseShield(int amount)
     {
         _shieldComponent.IncreaseShield(amount);
-    }
-
-    public void DrawSkill()
-    {
-        _handComponent.DrawSkill();
     }
 
     public float GetDamageMultiplier(DamageType damageType, DamageAffinity affinity)

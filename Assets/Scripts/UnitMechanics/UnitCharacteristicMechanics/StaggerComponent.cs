@@ -56,9 +56,10 @@ public class StaggerComponent : MonoBehaviour
         SetStaggerThreshold(currentHealth - StaggerAmount);
     }
 
-    private void SetStaggerAmount()
+    public void SetStaggerAmount()
     {
         StaggerAmount = Mathf.RoundToInt(_statsComponent.MaxHP * _statsComponent.StaggerPercent);
+        Debug.Log(StaggerAmount);
     }
 
     private void CheckStagger(int currentHealth)

@@ -59,8 +59,7 @@ public class RoundManager : MonoBehaviour
 
     public void EndRound()
     {
-        Debug.Log("EndRound");
-
+        
         CurrentUnit = null;
 
         RoundQueue.Clear();
@@ -68,6 +67,8 @@ public class RoundManager : MonoBehaviour
         PlayedUnits.Clear();
 
         RoundEnd.Invoke();
+        IsRoundPrepared = false;
+        PrepareRound();
     }
 
     public void BuildRoundQueue()
@@ -99,7 +100,7 @@ public class RoundManager : MonoBehaviour
 
     public void NextUnit()
     {
-        Debug.Log("NextUnit");
+        
 
         if (RoundQueue.Count == 0)
         {
@@ -159,24 +160,31 @@ public class RoundManager : MonoBehaviour
         PlayerController.DisableTargetChoosing();
 
         PlayerController.RefreshHandView();
-        PlayerController.InvokeShowStats();
     }
 
     public void EndTurn()
     {
-        Debug.Log("EndTurn");
+        ActionComponent[] actions =
+            CurrentUnit.GetComponentsInChildren<ActionComponent>();
 
-        SkillComponent skillComponent = CurrentUnit.GetComponent<SkillComponent>();
-        if (skillComponent != null)
+        foreach (ActionComponent action in actions)
         {
-            skillComponent.ClearCurrentSkill();
-            skillComponent.SetNotClashing();
-        }
+            SkillComponent skill =
+                action.GetComponent<SkillComponent>();
 
-        TargetComponent targetComponent = CurrentUnit.GetComponent<TargetComponent>();
-        if (targetComponent != null)
-        {
-            targetComponent.ClearTargets();
+            if (skill != null)
+            {
+                skill.ClearCurrentSkill();
+                skill.SetNotClashing();
+            }
+
+            TargetComponent target =
+                action.GetComponent<TargetComponent>();
+
+            if (target != null)
+            {
+                target.ClearTargets();
+            }
         }
 
         CurrentUnit = null;

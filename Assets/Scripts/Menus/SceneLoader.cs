@@ -7,6 +7,20 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadScene()
     {
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        
+        if (currentScene == "MainMenu")
+        {
+            SaveSystem.DeleteSave();
+        }
+
+
+        if (sceneName != "MainMenu")
+        {
+            SaveSystem.SaveLastScene(sceneName);
+        }
+
         SceneManager.LoadScene(sceneName);
     }
 }
